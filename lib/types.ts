@@ -20,4 +20,5 @@ export interface MapInfo {
   id: string;
   name: string;
   gradient: string;
+  image: string;
 }
