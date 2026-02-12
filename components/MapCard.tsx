@@ -8,54 +8,78 @@ interface MapCardProps {
   lineupCount: number;
 }
 
+const mapIcons: Record<string, string> = {
+  mirage: '🏜️',
+  inferno: '🔥',
+  nuke: '☢️',
+  ancient: '🗿',
+  anubis: '🐍',
+  dust2: '🌵',
+  train: '🚂',
+};
+
 export default function MapCard({ map, lineupCount }: MapCardProps) {
   return (
     <Link href={`/maps/${map.id}`}>
-      <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-amber-500/10">
-        {/* Gradient Background */}
+      <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+        {/* Main gradient background */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${map.gradient} opacity-90 dark:opacity-70 transition-opacity duration-500 group-hover:opacity-100`}
+          className={`absolute inset-0 bg-gradient-to-br ${map.gradient}`}
         />
 
-        {/* Animated Pattern Overlay */}
+        {/* Mesh gradient overlay */}
         <div
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0 opacity-30"
           style={{
-            backgroundImage: `
-              radial-gradient(circle at 20% 50%, white 2px, transparent 2px),
-              radial-gradient(circle at 80% 80%, white 1.5px, transparent 1.5px),
-              radial-gradient(circle at 40% 20%, white 1px, transparent 1px)
+            background: `
+              radial-gradient(at 0% 0%, rgba(255,255,255,0.3) 0px, transparent 50%),
+              radial-gradient(at 100% 100%, rgba(0,0,0,0.3) 0px, transparent 50%)
             `,
-            backgroundSize: '50px 50px, 80px 80px, 100px 100px',
-            animation: 'drift 20s ease-in-out infinite',
           }}
         />
 
-        {/* Shine effect on hover */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <div
-            className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
-            style={{
-              transform: 'translateX(-100%) translateY(-100%) rotate(45deg)',
-              transition: 'transform 0.6s ease-in-out',
-            }}
-          />
+        {/* Grid pattern */}
+        <svg className="absolute inset-0 w-full h-full opacity-10">
+          <defs>
+            <pattern
+              id={`grid-${map.id}`}
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                stroke="white"
+                strokeWidth="0.5"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill={`url(#grid-${map.id})`} />
+        </svg>
+
+        {/* Large map icon watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[120px] opacity-20 group-hover:scale-110 group-hover:opacity-30 transition-all duration-500">
+          {mapIcons[map.id]}
         </div>
 
         {/* Content */}
-        <div className="relative h-full flex flex-col justify-between p-6">
-          <div>
-            <h3 className="text-2xl font-bold text-white drop-shadow-lg">
-              {map.name}
-            </h3>
+        <div className="relative h-full flex flex-col justify-between p-5">
+          <div className="flex items-start justify-between">
+            <div>
+              <div className="text-3xl mb-1">{mapIcons[map.id]}</div>
+              <h3 className="text-2xl font-bold text-white drop-shadow-lg">
+                {map.name}
+              </h3>
+            </div>
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-white/80 font-medium">
+          <div className="flex items-center justify-between backdrop-blur-sm bg-black/10 rounded-xl px-3 py-2">
+            <span className="text-sm text-white/90 font-semibold">
               {lineupCount} {lineupCount === 1 ? 'lineup' : 'lineups'}
             </span>
-            <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
+            <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center group-hover:bg-white/30 group-hover:translate-x-1 transition-all">
               <svg
-                className="w-4 h-4 text-white transform group-hover:translate-x-0.5 transition-transform"
+                className="w-4 h-4 text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -63,7 +87,7 @@ export default function MapCard({ map, lineupCount }: MapCardProps) {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={2.5}
                   d="M9 5l7 7-7 7"
                 />
               </svg>
@@ -71,8 +95,8 @@ export default function MapCard({ map, lineupCount }: MapCardProps) {
           </div>
         </div>
 
-        {/* Hover Glow */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-black/20 to-transparent" />
+        {/* Hover shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/0 to-transparent group-hover:via-white/10 transition-all duration-500" />
       </div>
     </Link>
   );
