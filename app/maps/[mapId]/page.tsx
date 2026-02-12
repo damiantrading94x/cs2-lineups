@@ -268,12 +268,11 @@ export default function MapPage() {
       {/* Floating Add Button */}
       <button
         onClick={() => setShowUpload(true)}
-        className="fixed bottom-8 right-8 w-16 h-16 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xl shadow-amber-500/40 hover:shadow-amber-500/60 hover:scale-110 transition-all flex items-center justify-center z-[999]"
-        title="Add lineup"
+        className="fixed bottom-8 right-8 flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold shadow-xl shadow-amber-500/40 hover:shadow-amber-500/60 hover:scale-105 transition-all z-[999] text-sm"
         style={{ position: 'fixed' }}
       >
         <svg
-          className="w-7 h-7"
+          className="w-5 h-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -285,6 +284,7 @@ export default function MapPage() {
             d="M12 4v16m8-8H4"
           />
         </svg>
+        Add Lineup
       </button>
 
       {/* Upload Modal */}
