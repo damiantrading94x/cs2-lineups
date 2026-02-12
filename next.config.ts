@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'steamuserimages-a.akamaihd.net',
+        hostname: 'i.imgur.com',
       },
     ],
   },
