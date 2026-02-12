@@ -12,19 +12,35 @@ export default function MapCard({ map, lineupCount }: MapCardProps) {
   return (
     <Link href={`/maps/${map.id}`}>
       <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-amber-500/10">
-        {/* Map Background Image */}
+        {/* Gradient Background */}
         <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-          style={{ backgroundImage: `url(${map.image})` }}
+          className={`absolute inset-0 bg-gradient-to-br ${map.gradient} opacity-90 dark:opacity-70 transition-opacity duration-500 group-hover:opacity-100`}
         />
 
-        {/* Gradient Overlay */}
+        {/* Animated Pattern Overlay */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${map.gradient} opacity-60 dark:opacity-50 transition-opacity duration-500 group-hover:opacity-70`}
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at 20% 50%, white 2px, transparent 2px),
+              radial-gradient(circle at 80% 80%, white 1.5px, transparent 1.5px),
+              radial-gradient(circle at 40% 20%, white 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px, 80px 80px, 100px 100px',
+            animation: 'drift 20s ease-in-out infinite',
+          }}
         />
 
-        {/* Dark Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+        {/* Shine effect on hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div
+            className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
+            style={{
+              transform: 'translateX(-100%) translateY(-100%) rotate(45deg)',
+              transition: 'transform 0.6s ease-in-out',
+            }}
+          />
+        </div>
 
         {/* Content */}
         <div className="relative h-full flex flex-col justify-between p-6">
