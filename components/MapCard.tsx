@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { MapInfo } from '@/lib/types';
 
 interface MapCardProps {
@@ -13,14 +12,16 @@ export default function MapCard({ map, lineupCount }: MapCardProps) {
   return (
     <Link href={`/maps/${map.id}`}>
       <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+        {/* Gradient fallback */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${map.gradient}`} />
+
         {/* Background image */}
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={map.image}
           alt={map.name}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          unoptimized
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          loading="lazy"
         />
 
         {/* Dark gradient overlay */}
